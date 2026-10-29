@@ -46,7 +46,9 @@ On sparse graphs, at 1,000 nodes Edmonds-Karp took 78.2 (7.3) ms, push-relabel 2
 
 On dense graphs, at 1,000 nodes the three took 477.9 (18.0), 9.8 (5.6), and 2,459.8 (226.0) ms, and at 5,000 nodes 11,096.6 (910.5), 51.0 (40.3), and 50,061.7 (3,324.1) ms. At 10,000 nodes Edmonds-Karp took 38,363.6 (3,072.6) ms against 256.7 (259.6) ms for push-relabel. Edmonds-Karp timed out at 25,000 and 50,000 dense nodes, and push-relabel finished those in 604.4 (828.3) and 3,215.7 (3,676.2) ms.
 
-Three things stood out. First, push-relabel wins at every size on both families and the gap widens with size. Second, memory grows with size for push-relabel: 4.3 MB at 1,000 sparse nodes, 14.0 MB at 10,000, 31.2 MB at 25,000, and 61.6 MB at 50,000. The dense family is heavier because it has more edges, going from 2.1 MB at 1,000 nodes to 140.6 MB at 50,000. ![Augmentations by size](../results/augmentations_vs_size.png)
+Three things stood out. First, push-relabel wins at every size on both families and the gap widens with size. Second, memory grows with size for push-relabel: 4.3 MB at 1,000 sparse nodes, 14.0 MB at 10,000, 31.2 MB at 25,000, and 61.6 MB at 50,000. The dense family is heavier because it has more edges, going from 2.1 MB at 1,000 nodes to 140.6 MB at 50,000.
+
+![Augmentations by size](../results/augmentations_vs_size.png)
 
 Third, the flow values agreed exactly across every solver that finished the same graph, for example 934.2 at sparse 1,000 nodes and 4,568.2 at sparse 25,000 nodes, which is my main evidence that the answers are right at scale.
 
