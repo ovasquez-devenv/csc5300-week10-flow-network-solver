@@ -387,24 +387,33 @@ def plot_augmentations(summaries, path: str) -> str:
     return path
 
 
-def plot_convergence(profiles, sizes, path: str) -> str:
-    """Flow at the sink against operations for push-relabel."""
-    fig, ax = plt.subplots(figsize=(10.0, 5.5))
+def plot_convergence(profiles, keys, path: str) -> str:
+    """Flow at the sink against operations for push-relabel.
+
+    profiles maps (family, nodes) to the sample list, so the sparse and dense
+    families can sit in the same figure without one overwriting the other.
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(13.0, 5.5), sharey=True)
     colors = ["#1f4e79", "#c1121f", "#2b7a4b", "#8a5a00", "#5b2a86"]
-    for color, (nodes, profile) in zip(colors, zip(sizes, profiles)):
-        if not profile:
-            continue
-        ops = [p[0] for p in profile]
-        flows = [p[1] for p in profile]
-        top = max(flows) if flows else 1.0
-        if top > 0:
-            flows = [f / top for f in flows]
-        ax.plot(ops, flows, label=f"{nodes} nodes", color=color, linewidth=1.8)
-    ax.set_xlabel("operations (pushes plus relabels)")
-    ax.set_ylabel("flow at sink, as a fraction of the final value")
-    ax.set_title("Push-relabel convergence: how the flow builds up")
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=9)
+    for ax, family in zip(axes, ("sparse", "dense")):
+        keys_here = [k for k in keys if k[0] == family]
+        for color, key in zip(colors, keys_here):
+            profile = profiles[key]
+            if not profile:
+                continue
+            ops = [p[0] for p in profile]
+            flows = [p[1] for p in profile]
+            top = max(flows) if flows else 1.0
+            if top > 0:
+                flows = [f / top for f in flows]
+            ax.plot(ops, flows, label=f"{key[1]} nodes, final flow {top:g}",
+                    color=color, linewidth=1.8)
+        ax.set_xlabel("operations (pushes plus relabels)")
+        ax.set_title(f"{family} graphs")
+        ax.grid(True, alpha=0.3)
+        ax.legend(fontsize=9)
+    axes[0].set_ylabel("flow at sink, as a fraction of the final value")
+    fig.suptitle("Push-relabel convergence: how the flow builds up")
     fig.tight_layout()
     fig.savefig(path, dpi=DPI, bbox_inches="tight")
     plt.close(fig)
@@ -483,7 +492,7 @@ def main(argv=None) -> int:
                             f"seed {seed} {solver:14s} {record['seconds'] * 1000:9.1f} ms  "
                             f"flow {record['flow']:g}  work {record['augmentations']}  ok")
                         if solver == "push_relabel" and seed == seeds[0]:
-                            profiles[nodes] = record["profile"]
+                            profiles[(family, nodes)] = record["profile"]
                     else:
                         say(f"  {family:6s} {nodes:6d} nodes seed {seed} {solver:14s} "
                             f"{record['status']}: {record['detail']}")
@@ -556,20 +565,20 @@ def main(argv=None) -> int:
     profile_path = os.path.join(RESULTS, "convergence_profiles.csv")
     with open(profile_path, "w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
-        writer.writerow(["nodes", "operation", "flow_at_sink"])
-        for nodes, profile in profiles.items():
+        writer.writerow(["family", "nodes", "operation", "flow_at_sink"])
+        for (family, nodes), profile in sorted(profiles.items()):
             for op, flow_value in profile or []:
-                writer.writerow([nodes, op, flow_value])
+                writer.writerow([family, nodes, op, flow_value])
 
     figures = [
         plot_runtime(summaries, os.path.join(RESULTS, "runtime_vs_size.png")),
         plot_memory(summaries, os.path.join(RESULTS, "memory_vs_size.png")),
         plot_augmentations(summaries, os.path.join(RESULTS, "augmentations_vs_size.png")),
     ]
-    sizes_with_profiles = sorted(profiles)
-    if sizes_with_profiles:
+    profile_keys = sorted(profiles)
+    if profile_keys:
         figures.append(
-            plot_convergence([profiles[s] for s in sizes_with_profiles], sizes_with_profiles,
+            plot_convergence(profiles, profile_keys,
                              os.path.join(RESULTS, "push_relabel_convergence.png"))
         )
 
