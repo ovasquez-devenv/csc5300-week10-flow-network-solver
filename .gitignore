@@ -1,0 +1,36 @@
+# Python cache and test output
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Credentials and local settings
+.env
+*.key
+*.pem
+secrets.json
+
+# Editor and OS files
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Local run logs and scratch output
+*.log.txt
+scratch/
+tmp/
+out/
+
+# Large generated binaries. The benchmark writes PNG plots and small CSVs,
+# which are kept so the report figures travel with the repo. Big binary
+# artifacts such as videos and archives stay out.
+*.mp4
+*.zip
