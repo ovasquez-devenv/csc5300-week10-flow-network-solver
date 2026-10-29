@@ -54,21 +54,26 @@ Install the packages once:
 C:\Users\elsan\AppData\Local\Programs\Python\Python314\python.exe -m pip install -r requirements.txt
 ```
 
+That installs numpy, matplotlib, networkx, scipy, and pytest. networkx is
+required, not optional: `visualization/plot_network.py` imports it at the top of
+the module and the CLI imports that module, so the tests fail without it.
+
 Every module imports its neighbors by their folder name (`core.network`,
 `utils.generators`, and so on), so the project root has to be on the module
-search path. In PowerShell:
+search path. In PowerShell, from the project folder:
 
 ```
 $env:PYTHONPATH="."
 ```
 
-If you use Command Prompt instead, it is `set PYTHONPATH=.`.
+Set that in the same window before every command below, and set it again if you
+close the window. If you use Command Prompt instead, it is `set PYTHONPATH=.`.
 
 ## How to run
 
 All commands below are PowerShell, run from the project folder.
 
-Run the tests:
+Run the tests. There are 120 of them and they take about six seconds:
 
 ```
 C:\Users\elsan\AppData\Local\Programs\Python\Python314\python.exe -m pytest -v
@@ -81,9 +86,10 @@ application:
 C:\Users\elsan\AppData\Local\Programs\Python\Python314\python.exe examples\week10_demo.py
 ```
 
-Run the benchmark. It takes about twenty minutes because it runs three solvers
-over two graph families at five sizes with five seeds each. A quick pass at
-small sizes takes under three minutes:
+Run the benchmark. The full run took 2,304 seconds, about 38 minutes, on the
+machine this was built on, because it runs three solvers over two graph families
+at five sizes with five seeds each plus the repeated Edmonds-Karp timeouts. A
+quick pass at small sizes takes about two minutes:
 
 ```
 C:\Users\elsan\AppData\Local\Programs\Python\Python314\python.exe benchmarks\week10_flow_benchmark.py
@@ -163,27 +169,61 @@ result that fails a check.
 
 ## Results
 
-`results/` holds what the benchmark measured on this machine:
+`results/` holds what the benchmark measured, mean and standard deviation over
+seeds 5300 to 5304, with a 120 second budget per run:
 
 - `runtime_vs_size.png`, `memory_vs_size.png`, `augmentations_vs_size.png`, `push_relabel_convergence.png`
 - `benchmark_summary.csv`, one row per family, size, and solver, with mean and standard deviation across the five seeds
 - `benchmark_runs.csv`, one row per individual run
-- `convergence_profiles.csv`, the push-relabel profile data behind the convergence plot
+- `convergence_profiles.csv`, the push-relabel samples behind the convergence plot, labelled by family and size
 - `benchmark_run.log`, the console output of the run
+
+Runtime in milliseconds, mean followed by the standard deviation in parentheses.
+"timed out" means the solver did not finish within the 120 second budget at that
+size, so there is no measurement to report. The row is still in the CSV with a
+timeout status.
+
+| nodes | sparse EK | sparse PR | sparse MCF | dense EK | dense PR | dense MCF |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1,000 | 78.2 (7.3) | 20.7 (6.0) | 402.7 (59.2) | 477.9 (18.0) | 9.8 (5.6) | 2,459.8 (226.0) |
+| 5,000 | 1,748.2 (269.3) | 127.7 (19.6) | 8,470.5 (1,079.6) | 11,096.6 (910.5) | 51.0 (40.3) | 50,061.7 (3,324.1) |
+| 10,000 | 6,487.4 (414.1) | 311.6 (78.4) | not run | 38,363.6 (3,072.6) | 256.7 (259.6) | not run |
+| 25,000 | 34,469.9 (3,064.4) | 1,120.7 (86.6) | not run | timed out | 604.4 (828.3) | not run |
+| 50,000 | timed out | 3,673.0 (577.0) | not run | timed out | 3,215.7 (3,676.2) | not run |
+
+EK is Edmonds-Karp, PR is push-relabel, and MCF is min cost flow. Min cost flow
+was only run up to 5,000 nodes, which is why the two larger sizes say not run.
+
+Push-relabel peak memory was 4.3 MB at 1,000 sparse nodes, 14.0 MB at 10,000,
+31.2 MB at 25,000, and 61.6 MB at 50,000. On the dense family it was 2.1 MB at
+1,000 nodes and 140.6 MB at 50,000.
+
+Every solver that finished a graph returned the same flow value. That holds for
+all 35 graph and seed combinations where two or more solvers ran, with no
+exceptions.
 
 The numbers in `analysis/ch9_report.md` come from those files.
 
 ## Notes and limits
 
-Min cost flow is the slowest of the three, which is expected: it solves a
-harder problem, and every augmentation is a Dijkstra search. The benchmark runs
-it up to 5,000 nodes and stops there, which is why its series is shorter in the
-plots.
+Edmonds-Karp does not reach the assignment's target size. It ran out of the 120
+second budget on all five seeds at 50,000 sparse nodes, 25,000 dense nodes, and
+50,000 dense nodes. Those rows stay in the CSV with a timeout status and no
+runtime, so nothing is hidden. At 25,000 sparse nodes it needed 34,469.9 ms
+against 1,120.7 ms for push-relabel.
+
+Min cost flow is the slowest per node, which is expected: it solves a harder
+problem, and every augmentation is a Dijkstra search. The benchmark stops it at
+5,000 nodes, where dense graphs already take 50,061.7 ms.
 
 The dense family uses a fan out of 8 rather than a fully connected layer. A
 fully connected layered graph at 50,000 nodes would have about 11 million edges,
 which no implementation of these algorithms finishes quickly, and it is not a
 shape that shows up in practice.
+
+The runtimes are from the Linux machine this was built on. They will differ on
+a laptop. The flow values and the augmentation counts will not, because the
+generators are seeded.
 
 Graphs are built to be acyclic with a single source and a single sink, matching
 the assignment's description of network flow instances.
