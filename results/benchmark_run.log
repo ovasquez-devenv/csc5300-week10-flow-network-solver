@@ -1,160 +1,160 @@
 CSC 5300 Week 10 flow benchmark
-python 3.13.5, seeds [5300, 5301, 5302, 5303, 5304], sizes [1000, 5000, 10000, 25000, 50000]
+python 3.14.7, seeds [5300, 5301, 5302, 5303, 5304], sizes [1000, 5000, 10000, 25000, 50000]
 time budget per solver run: 120 seconds
 
-  sparse   1000 nodes    1980 edges seed 5300 edmonds_karp        75.6 ms  flow 873  work 299  ok
-  sparse   1000 nodes    1980 edges seed 5300 push_relabel        27.3 ms  flow 873  work 11775  ok
-  sparse   1000 nodes    1980 edges seed 5300 min_cost_flow       377.7 ms  flow 873  cost 122309  ok
-  sparse   1000 nodes    1980 edges seed 5301 edmonds_karp        83.1 ms  flow 993  work 336  ok
-  sparse   1000 nodes    1980 edges seed 5301 push_relabel        21.9 ms  flow 993  work 9182  ok
-  sparse   1000 nodes    1980 edges seed 5301 min_cost_flow       428.1 ms  flow 993  cost 150174  ok
-  sparse   1000 nodes    1980 edges seed 5302 edmonds_karp        85.2 ms  flow 1002  work 350  ok
-  sparse   1000 nodes    1980 edges seed 5302 push_relabel        17.0 ms  flow 1002  work 7972  ok
-  sparse   1000 nodes    1980 edges seed 5302 min_cost_flow       487.0 ms  flow 1002  cost 155188  ok
-  sparse   1000 nodes    1980 edges seed 5303 edmonds_karp        80.5 ms  flow 947  work 346  ok
-  sparse   1000 nodes    1980 edges seed 5303 push_relabel        12.6 ms  flow 947  work 5604  ok
-  sparse   1000 nodes    1980 edges seed 5303 min_cost_flow       392.2 ms  flow 947  cost 139768  ok
-  sparse   1000 nodes    1980 edges seed 5304 edmonds_karp        66.9 ms  flow 856  work 282  ok
-  sparse   1000 nodes    1980 edges seed 5304 push_relabel        24.9 ms  flow 856  work 10385  ok
-  sparse   1000 nodes    1980 edges seed 5304 min_cost_flow       328.4 ms  flow 856  cost 117162  ok
-  sparse   5000 nodes    9936 edges seed 5300 edmonds_karp      2017.8 ms  flow 2224  work 1437  ok
-  sparse   5000 nodes    9936 edges seed 5300 push_relabel       111.5 ms  flow 2224  work 43781  ok
-  sparse   5000 nodes    9936 edges seed 5300 min_cost_flow      9774.8 ms  flow 2224  cost 769436  ok
-  sparse   5000 nodes    9936 edges seed 5301 edmonds_karp      1438.8 ms  flow 1762  work 1039  ok
-  sparse   5000 nodes    9936 edges seed 5301 push_relabel       141.0 ms  flow 1762  work 43776  ok
-  sparse   5000 nodes    9936 edges seed 5301 min_cost_flow      7241.0 ms  flow 1762  cost 555833  ok
-  sparse   5000 nodes    9936 edges seed 5302 edmonds_karp      1630.3 ms  flow 1902  work 1204  ok
-  sparse   5000 nodes    9936 edges seed 5302 push_relabel       145.2 ms  flow 1902  work 50948  ok
-  sparse   5000 nodes    9936 edges seed 5302 min_cost_flow      7806.3 ms  flow 1902  cost 626248  ok
-  sparse   5000 nodes    9936 edges seed 5303 edmonds_karp      2045.3 ms  flow 2186  work 1376  ok
-  sparse   5000 nodes    9936 edges seed 5303 push_relabel       101.9 ms  flow 2186  work 37236  ok
-  sparse   5000 nodes    9936 edges seed 5303 min_cost_flow      9411.3 ms  flow 2186  cost 743464  ok
-  sparse   5000 nodes    9936 edges seed 5304 edmonds_karp      1608.9 ms  flow 1992  work 1184  ok
-  sparse   5000 nodes    9936 edges seed 5304 push_relabel       139.0 ms  flow 1992  work 44880  ok
-  sparse   5000 nodes    9936 edges seed 5304 min_cost_flow      8119.0 ms  flow 1992  cost 639977  ok
-  sparse  10000 nodes   19992 edges seed 5300 edmonds_karp      6792.0 ms  flow 2998  work 2237  ok
-  sparse  10000 nodes   19992 edges seed 5300 push_relabel       172.3 ms  flow 2998  work 49057  ok
-  sparse  10000 nodes   19992 edges seed 5301 edmonds_karp      6584.1 ms  flow 2899  work 2137  ok
-  sparse  10000 nodes   19992 edges seed 5301 push_relabel       354.8 ms  flow 2899  work 96322  ok
-  sparse  10000 nodes   19992 edges seed 5302 edmonds_karp      6850.3 ms  flow 3018  work 2215  ok
-  sparse  10000 nodes   19992 edges seed 5302 push_relabel       348.4 ms  flow 3018  work 117329  ok
-  sparse  10000 nodes   19992 edges seed 5303 edmonds_karp      5822.3 ms  flow 2588  work 1913  ok
-  sparse  10000 nodes   19992 edges seed 5303 push_relabel       351.4 ms  flow 2588  work 106839  ok
-  sparse  10000 nodes   19992 edges seed 5304 edmonds_karp      6388.3 ms  flow 2859  work 2124  ok
-  sparse  10000 nodes   19992 edges seed 5304 push_relabel       331.0 ms  flow 2859  work 109154  ok
-  sparse  25000 nodes   49920 edges seed 5300 edmonds_karp     32418.4 ms  flow 4478  work 3948  ok
-  sparse  25000 nodes   49920 edges seed 5300 push_relabel      1072.7 ms  flow 4478  work 234820  ok
-  sparse  25000 nodes   49920 edges seed 5301 edmonds_karp     38131.6 ms  flow 4742  work 4220  ok
-  sparse  25000 nodes   49920 edges seed 5301 push_relabel      1055.6 ms  flow 4742  work 224038  ok
-  sparse  25000 nodes   49920 edges seed 5302 edmonds_karp     30423.2 ms  flow 4212  work 3690  ok
-  sparse  25000 nodes   49920 edges seed 5302 push_relabel      1159.3 ms  flow 4212  work 239979  ok
-  sparse  25000 nodes   49920 edges seed 5303 edmonds_karp     35139.7 ms  flow 4680  work 4089  ok
-  sparse  25000 nodes   49920 edges seed 5303 push_relabel      1255.9 ms  flow 4680  work 253509  ok
-  sparse  25000 nodes   49920 edges seed 5304 edmonds_karp     36236.7 ms  flow 4729  work 4224  ok
-  sparse  25000 nodes   49920 edges seed 5304 push_relabel      1060.0 ms  flow 4729  work 223877  ok
+  sparse   1000 nodes    1980 edges seed 5300 edmonds_karp        60.3 ms  flow 873  work 299  ok
+  sparse   1000 nodes    1980 edges seed 5300 push_relabel        22.7 ms  flow 873  work 11775  ok
+  sparse   1000 nodes    1980 edges seed 5300 min_cost_flow       355.0 ms  flow 873  cost 122309  ok
+  sparse   1000 nodes    1980 edges seed 5301 edmonds_karp        69.8 ms  flow 993  work 336  ok
+  sparse   1000 nodes    1980 edges seed 5301 push_relabel        17.8 ms  flow 993  work 9182  ok
+  sparse   1000 nodes    1980 edges seed 5301 min_cost_flow       386.9 ms  flow 993  cost 150174  ok
+  sparse   1000 nodes    1980 edges seed 5302 edmonds_karp        77.4 ms  flow 1002  work 350  ok
+  sparse   1000 nodes    1980 edges seed 5302 push_relabel        15.7 ms  flow 1002  work 7972  ok
+  sparse   1000 nodes    1980 edges seed 5302 min_cost_flow       403.2 ms  flow 1002  cost 155188  ok
+  sparse   1000 nodes    1980 edges seed 5303 edmonds_karp        73.5 ms  flow 947  work 346  ok
+  sparse   1000 nodes    1980 edges seed 5303 push_relabel        15.4 ms  flow 947  work 5604  ok
+  sparse   1000 nodes    1980 edges seed 5303 min_cost_flow       387.1 ms  flow 947  cost 139768  ok
+  sparse   1000 nodes    1980 edges seed 5304 edmonds_karp        61.1 ms  flow 856  work 282  ok
+  sparse   1000 nodes    1980 edges seed 5304 push_relabel        21.1 ms  flow 856  work 10385  ok
+  sparse   1000 nodes    1980 edges seed 5304 min_cost_flow       333.4 ms  flow 856  cost 117162  ok
+  sparse   5000 nodes    9936 edges seed 5300 edmonds_karp      2015.8 ms  flow 2224  work 1437  ok
+  sparse   5000 nodes    9936 edges seed 5300 push_relabel       117.4 ms  flow 2224  work 43781  ok
+  sparse   5000 nodes    9936 edges seed 5300 min_cost_flow     14408.0 ms  flow 2224  cost 769436  ok
+  sparse   5000 nodes    9936 edges seed 5301 edmonds_karp      1485.1 ms  flow 1762  work 1039  ok
+  sparse   5000 nodes    9936 edges seed 5301 push_relabel       140.3 ms  flow 1762  work 43776  ok
+  sparse   5000 nodes    9936 edges seed 5301 min_cost_flow     10352.7 ms  flow 1762  cost 555833  ok
+  sparse   5000 nodes    9936 edges seed 5302 edmonds_karp      1582.7 ms  flow 1902  work 1204  ok
+  sparse   5000 nodes    9936 edges seed 5302 push_relabel       164.4 ms  flow 1902  work 50948  ok
+  sparse   5000 nodes    9936 edges seed 5302 min_cost_flow     12053.9 ms  flow 1902  cost 626248  ok
+  sparse   5000 nodes    9936 edges seed 5303 edmonds_karp      1825.6 ms  flow 2186  work 1376  ok
+  sparse   5000 nodes    9936 edges seed 5303 push_relabel       104.5 ms  flow 2186  work 37236  ok
+  sparse   5000 nodes    9936 edges seed 5303 min_cost_flow     14436.5 ms  flow 2186  cost 743464  ok
+  sparse   5000 nodes    9936 edges seed 5304 edmonds_karp      1709.2 ms  flow 1992  work 1184  ok
+  sparse   5000 nodes    9936 edges seed 5304 push_relabel       141.2 ms  flow 1992  work 44880  ok
+  sparse   5000 nodes    9936 edges seed 5304 min_cost_flow     10441.5 ms  flow 1992  cost 639977  ok
+  sparse  10000 nodes   19992 edges seed 5300 edmonds_karp     13338.8 ms  flow 2998  work 2237  ok
+  sparse  10000 nodes   19992 edges seed 5300 push_relabel       201.6 ms  flow 2998  work 49057  ok
+  sparse  10000 nodes   19992 edges seed 5301 edmonds_karp     13609.3 ms  flow 2899  work 2137  ok
+  sparse  10000 nodes   19992 edges seed 5301 push_relabel       373.3 ms  flow 2899  work 96322  ok
+  sparse  10000 nodes   19992 edges seed 5302 edmonds_karp     12533.7 ms  flow 3018  work 2215  ok
+  sparse  10000 nodes   19992 edges seed 5302 push_relabel       434.8 ms  flow 3018  work 117329  ok
+  sparse  10000 nodes   19992 edges seed 5303 edmonds_karp     10394.7 ms  flow 2588  work 1913  ok
+  sparse  10000 nodes   19992 edges seed 5303 push_relabel       429.9 ms  flow 2588  work 106839  ok
+  sparse  10000 nodes   19992 edges seed 5304 edmonds_karp     11617.7 ms  flow 2859  work 2124  ok
+  sparse  10000 nodes   19992 edges seed 5304 push_relabel       425.1 ms  flow 2859  work 109154  ok
+  sparse  25000 nodes   49920 edges seed 5300 edmonds_karp     76228.5 ms  flow 4478  work 3948  ok
+  sparse  25000 nodes   49920 edges seed 5300 push_relabel      1541.9 ms  flow 4478  work 234820  ok
+  sparse  25000 nodes   49920 edges seed 5301 edmonds_karp     85701.0 ms  flow 4742  work 4220  ok
+  sparse  25000 nodes   49920 edges seed 5301 push_relabel      1318.2 ms  flow 4742  work 224038  ok
+  sparse  25000 nodes   49920 edges seed 5302 edmonds_karp     77409.1 ms  flow 4212  work 3690  ok
+  sparse  25000 nodes   49920 edges seed 5302 push_relabel      1577.0 ms  flow 4212  work 239979  ok
+  sparse  25000 nodes   49920 edges seed 5303 edmonds_karp     84144.9 ms  flow 4680  work 4089  ok
+  sparse  25000 nodes   49920 edges seed 5303 push_relabel      1477.5 ms  flow 4680  work 253509  ok
+  sparse  25000 nodes   49920 edges seed 5304 edmonds_karp     86081.1 ms  flow 4729  work 4224  ok
+  sparse  25000 nodes   49920 edges seed 5304 push_relabel      1234.1 ms  flow 4729  work 223877  ok
   sparse  50000 nodes seed 5300 edmonds_karp   timeout: child process exceeded the time budget
-  sparse  50000 nodes   99900 edges seed 5300 push_relabel      2940.1 ms  flow 6523  work 449258  ok
+  sparse  50000 nodes   99900 edges seed 5300 push_relabel      3604.6 ms  flow 6523  work 449258  ok
   sparse  50000 nodes seed 5301 edmonds_karp   timeout: child process exceeded the time budget
-  sparse  50000 nodes   99900 edges seed 5301 push_relabel      4312.3 ms  flow 6000  work 583687  ok
+  sparse  50000 nodes   99900 edges seed 5301 push_relabel      4988.5 ms  flow 6000  work 583687  ok
   sparse  50000 nodes seed 5302 edmonds_karp   timeout: child process exceeded the time budget
-  sparse  50000 nodes   99900 edges seed 5302 push_relabel      3521.9 ms  flow 6483  work 412634  ok
+  sparse  50000 nodes   99900 edges seed 5302 push_relabel      3746.2 ms  flow 6483  work 412634  ok
   sparse  50000 nodes seed 5303 edmonds_karp   timeout: child process exceeded the time budget
-  sparse  50000 nodes   99900 edges seed 5303 push_relabel      4203.5 ms  flow 6072  work 434747  ok
+  sparse  50000 nodes   99900 edges seed 5303 push_relabel      4149.4 ms  flow 6072  work 434747  ok
   sparse  50000 nodes seed 5304 edmonds_karp   timeout: child process exceeded the time budget
-  sparse  50000 nodes   99900 edges seed 5304 push_relabel      3387.3 ms  flow 6640  work 493507  ok
-  dense    1000 nodes    7722 edges seed 5300 edmonds_karp       453.1 ms  flow 1529  work 598  ok
-  dense    1000 nodes    7722 edges seed 5300 push_relabel        17.2 ms  flow 1529  work 1865  ok
-  dense    1000 nodes    7722 edges seed 5300 min_cost_flow      2103.9 ms  flow 1529  cost 97235  ok
-  dense    1000 nodes    7722 edges seed 5301 edmonds_karp       498.4 ms  flow 1862  work 692  ok
-  dense    1000 nodes    7722 edges seed 5301 push_relabel        14.6 ms  flow 1862  work 2022  ok
-  dense    1000 nodes    7722 edges seed 5301 min_cost_flow      2716.9 ms  flow 1862  cost 132573  ok
-  dense    1000 nodes    7722 edges seed 5302 edmonds_karp       492.1 ms  flow 1682  work 644  ok
-  dense    1000 nodes    7722 edges seed 5302 push_relabel         5.9 ms  flow 1682  work 1772  ok
-  dense    1000 nodes    7722 edges seed 5302 min_cost_flow      2512.0 ms  flow 1682  cost 110585  ok
-  dense    1000 nodes    7722 edges seed 5303 edmonds_karp       471.0 ms  flow 1631  work 629  ok
-  dense    1000 nodes    7722 edges seed 5303 push_relabel         5.6 ms  flow 1631  work 1717  ok
-  dense    1000 nodes    7722 edges seed 5303 min_cost_flow      2421.2 ms  flow 1631  cost 107741  ok
-  dense    1000 nodes    7722 edges seed 5304 edmonds_karp       474.8 ms  flow 1604  work 618  ok
-  dense    1000 nodes    7722 edges seed 5304 push_relabel         5.9 ms  flow 1604  work 1764  ok
-  dense    1000 nodes    7722 edges seed 5304 min_cost_flow      2545.0 ms  flow 1604  cost 103593  ok
-  dense    5000 nodes   39312 edges seed 5300 edmonds_karp     10566.3 ms  flow 3561  work 2325  ok
-  dense    5000 nodes   39312 edges seed 5300 push_relabel        34.5 ms  flow 3561  work 8352  ok
-  dense    5000 nodes   39312 edges seed 5300 min_cost_flow     49981.4 ms  flow 3561  cost 496251  ok
-  dense    5000 nodes   39312 edges seed 5301 edmonds_karp     11820.4 ms  flow 4000  work 2650  ok
-  dense    5000 nodes   39312 edges seed 5301 push_relabel       122.9 ms  flow 4000  work 9714  ok
-  dense    5000 nodes   39312 edges seed 5301 min_cost_flow     55584.4 ms  flow 4000  cost 588704  ok
-  dense    5000 nodes   39312 edges seed 5302 edmonds_karp     12301.0 ms  flow 3282  work 2143  ok
-  dense    5000 nodes   39312 edges seed 5302 push_relabel        35.9 ms  flow 3282  work 7662  ok
-  dense    5000 nodes   39312 edges seed 5302 min_cost_flow     46844.8 ms  flow 3282  cost 449721  ok
-  dense    5000 nodes   39312 edges seed 5303 edmonds_karp     10193.9 ms  flow 3526  work 2337  ok
-  dense    5000 nodes   39312 edges seed 5303 push_relabel        32.1 ms  flow 3526  work 8403  ok
-  dense    5000 nodes   39312 edges seed 5303 min_cost_flow     48290.2 ms  flow 3526  cost 502425  ok
-  dense    5000 nodes   39312 edges seed 5304 edmonds_karp     10601.3 ms  flow 3546  work 2354  ok
-  dense    5000 nodes   39312 edges seed 5304 push_relabel        29.5 ms  flow 3546  work 8417  ok
-  dense    5000 nodes   39312 edges seed 5304 min_cost_flow     49607.5 ms  flow 3546  cost 499333  ok
-  dense   10000 nodes   79356 edges seed 5300 edmonds_karp     35534.3 ms  flow 4773  work 3742  ok
-  dense   10000 nodes   79356 edges seed 5300 push_relabel        77.0 ms  flow 4773  work 15603  ok
-  dense   10000 nodes   79356 edges seed 5301 edmonds_karp     43530.0 ms  flow 5144  work 4026  ok
-  dense   10000 nodes   79356 edges seed 5301 push_relabel       666.4 ms  flow 5144  work 19017  ok
-  dense   10000 nodes   79356 edges seed 5302 edmonds_karp     38218.2 ms  flow 4852  work 3811  ok
-  dense   10000 nodes   79356 edges seed 5302 push_relabel        81.7 ms  flow 4852  work 15688  ok
-  dense   10000 nodes   79356 edges seed 5303 edmonds_karp     36700.3 ms  flow 5027  work 3916  ok
-  dense   10000 nodes   79356 edges seed 5303 push_relabel       365.6 ms  flow 5027  work 16406  ok
-  dense   10000 nodes   79356 edges seed 5304 edmonds_karp     37835.5 ms  flow 5099  work 4017  ok
-  dense   10000 nodes   79356 edges seed 5304 push_relabel        92.7 ms  flow 5099  work 16400  ok
+  sparse  50000 nodes   99900 edges seed 5304 push_relabel      3479.3 ms  flow 6640  work 493507  ok
+  dense    1000 nodes    7722 edges seed 5300 edmonds_karp       416.8 ms  flow 1529  work 598  ok
+  dense    1000 nodes    7722 edges seed 5300 push_relabel        17.6 ms  flow 1529  work 1865  ok
+  dense    1000 nodes    7722 edges seed 5300 min_cost_flow      2129.1 ms  flow 1529  cost 97235  ok
+  dense    1000 nodes    7722 edges seed 5301 edmonds_karp       485.4 ms  flow 1862  work 692  ok
+  dense    1000 nodes    7722 edges seed 5301 push_relabel        17.4 ms  flow 1862  work 2022  ok
+  dense    1000 nodes    7722 edges seed 5301 min_cost_flow      2746.7 ms  flow 1862  cost 132573  ok
+  dense    1000 nodes    7722 edges seed 5302 edmonds_karp       467.4 ms  flow 1682  work 644  ok
+  dense    1000 nodes    7722 edges seed 5302 push_relabel         6.1 ms  flow 1682  work 1772  ok
+  dense    1000 nodes    7722 edges seed 5302 min_cost_flow      2402.9 ms  flow 1682  cost 110585  ok
+  dense    1000 nodes    7722 edges seed 5303 edmonds_karp       460.8 ms  flow 1631  work 629  ok
+  dense    1000 nodes    7722 edges seed 5303 push_relabel         5.1 ms  flow 1631  work 1717  ok
+  dense    1000 nodes    7722 edges seed 5303 min_cost_flow      2330.5 ms  flow 1631  cost 107741  ok
+  dense    1000 nodes    7722 edges seed 5304 edmonds_karp       447.9 ms  flow 1604  work 618  ok
+  dense    1000 nodes    7722 edges seed 5304 push_relabel         6.6 ms  flow 1604  work 1764  ok
+  dense    1000 nodes    7722 edges seed 5304 min_cost_flow      2201.4 ms  flow 1604  cost 103593  ok
+  dense    5000 nodes   39312 edges seed 5300 edmonds_karp     17616.6 ms  flow 3561  work 2325  ok
+  dense    5000 nodes   39312 edges seed 5300 push_relabel        44.5 ms  flow 3561  work 8352  ok
+  dense    5000 nodes   39312 edges seed 5300 min_cost_flow     69629.3 ms  flow 3561  cost 496251  ok
+  dense    5000 nodes   39312 edges seed 5301 edmonds_karp     20172.6 ms  flow 4000  work 2650  ok
+  dense    5000 nodes   39312 edges seed 5301 push_relabel       199.6 ms  flow 4000  work 9714  ok
+  dense    5000 nodes   39312 edges seed 5301 min_cost_flow     80201.2 ms  flow 4000  cost 588704  ok
+  dense    5000 nodes   39312 edges seed 5302 edmonds_karp     15698.0 ms  flow 3282  work 2143  ok
+  dense    5000 nodes   39312 edges seed 5302 push_relabel        44.1 ms  flow 3282  work 7662  ok
+  dense    5000 nodes   39312 edges seed 5302 min_cost_flow     64796.0 ms  flow 3282  cost 449721  ok
+  dense    5000 nodes   39312 edges seed 5303 edmonds_karp     17151.4 ms  flow 3526  work 2337  ok
+  dense    5000 nodes   39312 edges seed 5303 push_relabel        44.2 ms  flow 3526  work 8403  ok
+  dense    5000 nodes   39312 edges seed 5303 min_cost_flow     73085.4 ms  flow 3526  cost 502425  ok
+  dense    5000 nodes   39312 edges seed 5304 edmonds_karp     20358.9 ms  flow 3546  work 2354  ok
+  dense    5000 nodes   39312 edges seed 5304 push_relabel        46.0 ms  flow 3546  work 8417  ok
+  dense    5000 nodes   39312 edges seed 5304 min_cost_flow     74666.9 ms  flow 3546  cost 499333  ok
+  dense   10000 nodes   79356 edges seed 5300 edmonds_karp     63603.9 ms  flow 4773  work 3742  ok
+  dense   10000 nodes   79356 edges seed 5300 push_relabel        93.1 ms  flow 4773  work 15603  ok
+  dense   10000 nodes   79356 edges seed 5301 edmonds_karp     66809.6 ms  flow 5144  work 4026  ok
+  dense   10000 nodes   79356 edges seed 5301 push_relabel       840.1 ms  flow 5144  work 19017  ok
+  dense   10000 nodes   79356 edges seed 5302 edmonds_karp     67343.9 ms  flow 4852  work 3811  ok
+  dense   10000 nodes   79356 edges seed 5302 push_relabel        90.4 ms  flow 4852  work 15688  ok
+  dense   10000 nodes   79356 edges seed 5303 edmonds_karp     66365.3 ms  flow 5027  work 3916  ok
+  dense   10000 nodes   79356 edges seed 5303 push_relabel        90.1 ms  flow 5027  work 16406  ok
+  dense   10000 nodes   79356 edges seed 5304 edmonds_karp     68289.8 ms  flow 5099  work 4017  ok
+  dense   10000 nodes   79356 edges seed 5304 push_relabel        89.5 ms  flow 5099  work 16400  ok
   dense   25000 nodes seed 5300 edmonds_karp   timeout: child process exceeded the time budget
-  dense   25000 nodes  198720 edges seed 5300 push_relabel       236.5 ms  flow 7294  work 37435  ok
+  dense   25000 nodes  198720 edges seed 5300 push_relabel       225.3 ms  flow 7294  work 37435  ok
   dense   25000 nodes seed 5301 edmonds_karp   timeout: child process exceeded the time budget
-  dense   25000 nodes  198720 edges seed 5301 push_relabel      2086.0 ms  flow 8238  work 71070  ok
+  dense   25000 nodes  198720 edges seed 5301 push_relabel      2251.3 ms  flow 8238  work 71070  ok
   dense   25000 nodes seed 5302 edmonds_karp   timeout: child process exceeded the time budget
-  dense   25000 nodes  198720 edges seed 5302 push_relabel       220.2 ms  flow 7438  work 38121  ok
+  dense   25000 nodes  198720 edges seed 5302 push_relabel       229.7 ms  flow 7438  work 38121  ok
   dense   25000 nodes seed 5303 edmonds_karp   timeout: child process exceeded the time budget
-  dense   25000 nodes  198720 edges seed 5303 push_relabel       244.4 ms  flow 7806  work 39762  ok
+  dense   25000 nodes  198720 edges seed 5303 push_relabel       232.8 ms  flow 7806  work 39762  ok
   dense   25000 nodes seed 5304 edmonds_karp   timeout: child process exceeded the time budget
-  dense   25000 nodes  198720 edges seed 5304 push_relabel       234.7 ms  flow 8466  work 41507  ok
+  dense   25000 nodes  198720 edges seed 5304 push_relabel       233.4 ms  flow 8466  work 41507  ok
   dense   50000 nodes seed 5300 edmonds_karp   timeout: child process exceeded the time budget
-  dense   50000 nodes  398250 edges seed 5300 push_relabel       550.2 ms  flow 10852  work 77406  ok
+  dense   50000 nodes  398250 edges seed 5300 push_relabel       552.9 ms  flow 10852  work 77406  ok
   dense   50000 nodes seed 5301 edmonds_karp   timeout: child process exceeded the time budget
-  dense   50000 nodes  398250 edges seed 5301 push_relabel      6407.4 ms  flow 11045  work 85073  ok
+  dense   50000 nodes  398250 edges seed 5301 push_relabel      6113.9 ms  flow 11045  work 85073  ok
   dense   50000 nodes seed 5302 edmonds_karp   timeout: child process exceeded the time budget
-  dense   50000 nodes  398250 edges seed 5302 push_relabel       582.8 ms  flow 11115  work 79092  ok
+  dense   50000 nodes  398250 edges seed 5302 push_relabel       536.2 ms  flow 11115  work 79092  ok
   dense   50000 nodes seed 5303 edmonds_karp   timeout: child process exceeded the time budget
-  dense   50000 nodes  398250 edges seed 5303 push_relabel       553.3 ms  flow 10398  work 74775  ok
+  dense   50000 nodes  398250 edges seed 5303 push_relabel       535.8 ms  flow 10398  work 74775  ok
   dense   50000 nodes seed 5304 edmonds_karp   timeout: child process exceeded the time budget
-  dense   50000 nodes  398250 edges seed 5304 push_relabel      7984.9 ms  flow 10436  work 122283  ok
+  dense   50000 nodes  398250 edges seed 5304 push_relabel      7564.3 ms  flow 10436  work 122283  ok
 
 Summary, mean and standard deviation across seeds
 family     nodes solver              mean ms    std ms   mem MB   mean work  runs
-sparse      1000 edmonds_karp           78.2       7.3      3.4         323  5/5 
-sparse      1000 push_relabel           20.7       6.0      4.3        8984  5/5 
-sparse      1000 min_cost_flow         402.7      59.2      3.7         475  5/5 
-sparse      5000 edmonds_karp         1748.2     269.3      6.8        1248  5/5 
-sparse      5000 push_relabel          127.7      19.6      8.4       44124  5/5 
-sparse      5000 min_cost_flow        8470.5    1079.6      6.9        1727  5/5 
-sparse     10000 edmonds_karp         6487.4     414.1     11.4        2125  5/5 
-sparse     10000 push_relabel          311.6      78.4     14.0       95740  5/5 
-sparse     25000 edmonds_karp        34469.9    3064.4     25.6        4034  5/5 
-sparse     25000 push_relabel         1120.7      86.6     31.2      235245  5/5 
+sparse      1000 edmonds_karp           68.5       7.5      3.3         323  5/5 
+sparse      1000 push_relabel           18.5       3.2      4.2        8984  5/5 
+sparse      1000 min_cost_flow         373.1      28.2      3.4         475  5/5 
+sparse      5000 edmonds_karp         1723.7     207.8      7.4        1248  5/5 
+sparse      5000 push_relabel          133.6      23.2      9.1       44124  5/5 
+sparse      5000 min_cost_flow       12338.5    2019.1      7.7        1727  5/5 
+sparse     10000 edmonds_karp        12298.8    1317.5     12.7        2125  5/5 
+sparse     10000 push_relabel          372.9      98.9     15.3       95740  5/5 
+sparse     25000 edmonds_karp        81912.9    4725.0     27.4        4034  5/5 
+sparse     25000 push_relabel         1429.7     147.7     33.4      235245  5/5 
 sparse     50000 edmonds_karp        timeout                                 0/5 
-sparse     50000 push_relabel         3673.0     577.0     61.6      474767  5/5 
-dense       1000 edmonds_karp          477.9      18.0      2.1         636  5/5 
-dense       1000 push_relabel            9.8       5.6      2.1        1828  5/5 
-dense       1000 min_cost_flow        2459.8     226.0      1.9         946  5/5 
-dense       5000 edmonds_karp        11096.6     910.5     12.8        2362  5/5 
-dense       5000 push_relabel           51.0      40.3     12.9        8510  5/5 
-dense       5000 min_cost_flow       50061.7    3324.1     13.3        3194  5/5 
-dense      10000 edmonds_karp        38363.6    3072.6     27.2        3902  5/5 
-dense      10000 push_relabel          256.7     259.6     27.8       16623  5/5 
+sparse     50000 push_relabel         3993.6     610.6     61.8      474767  5/5 
+dense       1000 edmonds_karp          455.7      25.6      5.2         636  5/5 
+dense       1000 push_relabel           10.6       6.4      5.6        1828  5/5 
+dense       1000 min_cost_flow        2362.1     240.2      5.3         946  5/5 
+dense       5000 edmonds_karp        18199.5    2015.7     17.4        2362  5/5 
+dense       5000 push_relabel           75.7      69.3     17.1        8510  5/5 
+dense       5000 min_cost_flow       72475.8    5743.2     17.4        3194  5/5 
+dense      10000 edmonds_karp        66482.5    1761.8     30.2        3902  5/5 
+dense      10000 push_relabel          240.6     335.1     30.7       16623  5/5 
 dense      25000 edmonds_karp        timeout                                 0/5 
-dense      25000 push_relabel          604.4     828.3     69.4       45579  5/5 
+dense      25000 push_relabel          634.5     903.8     73.4       45579  5/5 
 dense      50000 edmonds_karp        timeout                                 0/5 
-dense      50000 push_relabel         3215.7    3676.2    140.6       87726  5/5 
+dense      50000 push_relabel         3060.6    3487.2    144.6       87726  5/5 
 
-wrote /workspace/Week10_work/5300/FlowNetworkSolver/results/benchmark_summary.csv
-wrote /workspace/Week10_work/5300/FlowNetworkSolver/results/benchmark_runs.csv
-wrote /workspace/Week10_work/5300/FlowNetworkSolver/results/convergence_profiles.csv
-wrote /workspace/Week10_work/5300/FlowNetworkSolver/results/runtime_vs_size.png
-wrote /workspace/Week10_work/5300/FlowNetworkSolver/results/memory_vs_size.png
-wrote /workspace/Week10_work/5300/FlowNetworkSolver/results/augmentations_vs_size.png
-wrote /workspace/Week10_work/5300/FlowNetworkSolver/results/push_relabel_convergence.png
-total benchmark time 2304.0 s
+wrote C:\Users\elsan\OneDrive\Desktop\MCS\Week 10\5300\FlowNetworkSolver\results\benchmark_summary.csv
+wrote C:\Users\elsan\OneDrive\Desktop\MCS\Week 10\5300\FlowNetworkSolver\results\benchmark_runs.csv
+wrote C:\Users\elsan\OneDrive\Desktop\MCS\Week 10\5300\FlowNetworkSolver\results\convergence_profiles.csv
+wrote C:\Users\elsan\OneDrive\Desktop\MCS\Week 10\5300\FlowNetworkSolver\results\runtime_vs_size.png
+wrote C:\Users\elsan\OneDrive\Desktop\MCS\Week 10\5300\FlowNetworkSolver\results\memory_vs_size.png
+wrote C:\Users\elsan\OneDrive\Desktop\MCS\Week 10\5300\FlowNetworkSolver\results\augmentations_vs_size.png
+wrote C:\Users\elsan\OneDrive\Desktop\MCS\Week 10\5300\FlowNetworkSolver\results\push_relabel_convergence.png
+total benchmark time 2887.1 s

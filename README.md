@@ -86,8 +86,8 @@ application:
 C:\Users\elsan\AppData\Local\Programs\Python\Python314\python.exe examples\week10_demo.py
 ```
 
-Run the benchmark. The full run took 2,304 seconds, about 38 minutes, on the
-machine this was built on, because it runs three solvers over two graph families
+Run the benchmark. The full run took 2,887 seconds, about 48 minutes, on my
+Windows PC, because it runs three solvers over two graph families
 at five sizes with five seeds each plus the repeated Edmonds-Karp timeouts. A
 quick pass at small sizes takes about two minutes:
 
@@ -185,18 +185,18 @@ timeout status.
 
 | nodes | sparse EK | sparse PR | sparse MCF | dense EK | dense PR | dense MCF |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1,000 | 78.2 (7.3) | 20.7 (6.0) | 402.7 (59.2) | 477.9 (18.0) | 9.8 (5.6) | 2,459.8 (226.0) |
-| 5,000 | 1,748.2 (269.3) | 127.7 (19.6) | 8,470.5 (1,079.6) | 11,096.6 (910.5) | 51.0 (40.3) | 50,061.7 (3,324.1) |
-| 10,000 | 6,487.4 (414.1) | 311.6 (78.4) | not run | 38,363.6 (3,072.6) | 256.7 (259.6) | not run |
-| 25,000 | 34,469.9 (3,064.4) | 1,120.7 (86.6) | not run | timed out | 604.4 (828.3) | not run |
-| 50,000 | timed out | 3,673.0 (577.0) | not run | timed out | 3,215.7 (3,676.2) | not run |
+| 1,000 | 68.5 (7.5) | 18.5 (3.2) | 373.1 (28.2) | 455.7 (25.6) | 10.6 (6.4) | 2,362.1 (240.2) |
+| 5,000 | 1,723.7 (207.8) | 133.6 (23.2) | 12,338.5 (2,019.1) | 18,199.5 (2,015.7) | 75.7 (69.3) | 72,475.8 (5,743.2) |
+| 10,000 | 12,298.8 (1,317.5) | 372.9 (98.9) | not run | 66,482.5 (1,761.8) | 240.6 (335.1) | not run |
+| 25,000 | 81,912.9 (4,725.0) | 1,429.7 (147.7) | not run | timed out | 634.5 (903.8) | not run |
+| 50,000 | timed out | 3,993.6 (610.6) | not run | timed out | 3,060.6 (3,487.2) | not run |
 
 EK is Edmonds-Karp, PR is push-relabel, and MCF is min cost flow. Min cost flow
 was only run up to 5,000 nodes, which is why the two larger sizes say not run.
 
-Push-relabel peak memory was 4.3 MB at 1,000 sparse nodes, 14.0 MB at 10,000,
-31.2 MB at 25,000, and 61.6 MB at 50,000. On the dense family it was 2.1 MB at
-1,000 nodes and 140.6 MB at 50,000.
+Push-relabel peak memory was 4.2 MB at 1,000 sparse nodes, 15.3 MB at 10,000,
+33.4 MB at 25,000, and 61.8 MB at 50,000. On the dense family it was 5.6 MB at
+1,000 nodes and 144.6 MB at 50,000.
 
 Every solver that finished a graph returned the same flow value. That holds for
 all 35 graph and seed combinations where two or more solvers ran, with no
@@ -209,20 +209,20 @@ The numbers in `analysis/ch9_report.md` come from those files.
 Edmonds-Karp does not reach the assignment's target size. It ran out of the 120
 second budget on all five seeds at 50,000 sparse nodes, 25,000 dense nodes, and
 50,000 dense nodes. Those rows stay in the CSV with a timeout status and no
-runtime, so nothing is hidden. At 25,000 sparse nodes it needed 34,469.9 ms
-against 1,120.7 ms for push-relabel.
+runtime, so nothing is hidden. At 25,000 sparse nodes it needed 81,912.9 ms
+against 1,429.7 ms for push-relabel.
 
 Min cost flow is the slowest per node, which is expected: it solves a harder
 problem, and every augmentation is a Dijkstra search. The benchmark stops it at
-5,000 nodes, where dense graphs already take 50,061.7 ms.
+5,000 nodes, where dense graphs already take 72,475.8 ms.
 
 The dense family uses a fan out of 8 rather than a fully connected layer. A
 fully connected layered graph at 50,000 nodes would have about 11 million edges,
 which no implementation of these algorithms finishes quickly, and it is not a
 shape that shows up in practice.
 
-The runtimes are from the Linux machine this was built on. They will differ on
-a laptop. The flow values and the augmentation counts will not, because the
+The runtimes are from my Windows PC with Python 3.14. They will differ on
+other machines. The flow values and the augmentation counts will not, because the
 generators are seeded.
 
 Graphs are built to be acyclic with a single source and a single sink, matching

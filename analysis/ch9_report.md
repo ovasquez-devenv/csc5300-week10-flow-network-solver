@@ -6,7 +6,7 @@ CSC 5300 Advanced Algorithms, Dr. Amakobe
 
 ## Executive Summary
 
-I built a flow network solver that puts Edmonds-Karp, push-relabel, and min cost max flow on one shared graph structure, then used those solvers for bipartite matching, image segmentation by graph cuts, and scheduling. The project has 120 passing pytest tests and benchmarks five seeds at five sizes on two graph families. Push-relabel is the only one that reaches the assignment's target of 50,000 vertices. It finished 50,000 sparse nodes in 3,673.0 ms mean with a standard deviation of 577.0 ms, and 50,000 dense nodes in 3,215.7 ms mean with a standard deviation of 3,676.2 ms. Edmonds-Karp ran out of its 120 second budget on all five seeds at 50,000 sparse nodes, 25,000 dense nodes, and 50,000 dense nodes. Min cost flow solves the harder problem, so I only ran it up to 5,000 nodes. Every solver that finished returned the same flow value on the same graph.
+I built a flow network solver that puts Edmonds-Karp, push-relabel, and min cost max flow on one shared graph structure, then used those solvers for bipartite matching, image segmentation by graph cuts, and scheduling. The project has 120 passing pytest tests and benchmarks five seeds at five sizes on two graph families. Push-relabel is the only one that reaches the assignment's target of 50,000 vertices. It finished 50,000 sparse nodes in 3,993.6 ms mean with a standard deviation of 610.6 ms, and 50,000 dense nodes in 3,060.6 ms mean with a standard deviation of 3,487.2 ms. Edmonds-Karp ran out of its 120 second budget on all five seeds at 50,000 sparse nodes, 25,000 dense nodes, and 50,000 dense nodes. Min cost flow solves the harder problem, so I only ran it up to 5,000 nodes. Every solver that finished returned the same flow value on the same graph.
 
 ## Theory Overview
 
@@ -20,11 +20,11 @@ Min cost flow puts a cost on each unit of flow and asks for the cheapest way to 
 
 ## Algorithm Comparison
 
-Edmonds-Karp is the easiest to explain and to trust. It finds the shortest augmenting path by breadth first search, so the bound is O(V E squared). The price is that every augmentation costs a full BFS. At 1,000 sparse nodes it took 78.2 (7.3) ms and 322.6 augmentations. At 25,000 sparse nodes it took 34,469.9 (3,064.4) ms and 4,034.2 augmentations. The work per augmentation grows because each BFS looks at more edges.
+Edmonds-Karp is the easiest to explain and to trust. It finds the shortest augmenting path by breadth first search, so the bound is O(V E squared). The price is that every augmentation costs a full BFS. At 1,000 sparse nodes it took 68.5 (7.5) ms and 322.6 augmentations. At 25,000 sparse nodes it took 81,912.9 (4,725.0) ms and 4,034.2 augmentations. The work per augmentation grows because each BFS looks at more edges.
 
-Push-relabel makes the opposite trade. It does far more augmentations, but each one is local. At 1,000 sparse nodes it made 8,983.6 augmentations against the 322.6 of Edmonds-Karp, and still finished in 20.7 ms against 78.2 ms. At 50,000 sparse nodes it made 474,766.6 augmentations in 3,673.0 ms. A push touches one edge while a BFS touches the whole graph, so the cheap operation wins once the graph gets big. I use the highest label variant with global relabeling and the gap heuristic.
+Push-relabel makes the opposite trade. It does far more augmentations, but each one is local. At 1,000 sparse nodes it made 8,983.6 augmentations against the 322.6 of Edmonds-Karp, and still finished in 18.5 ms against 68.5 ms. At 50,000 sparse nodes it made 474,766.6 augmentations in 3,993.6 ms. A push touches one edge while a BFS touches the whole graph, so the cheap operation wins once the graph gets big. I use the highest label variant with global relabeling and the gap heuristic.
 
-Min cost flow is the slowest per node, which fits because it solves a harder problem. At 1,000 sparse nodes it took 402.7 ms with 475.2 augmentations, and at 5,000 sparse nodes 8,470.5 ms with 1,727.4 augmentations. On dense graphs it was 2,459.8 ms at 1,000 nodes and 50,061.7 ms at 5,000. Each augmentation is a Dijkstra search plus a potential update.
+Min cost flow is the slowest per node, which fits because it solves a harder problem. At 1,000 sparse nodes it took 373.1 ms with 475.2 augmentations, and at 5,000 sparse nodes 12,338.5 ms with 1,727.4 augmentations. On dense graphs it was 2,362.1 ms at 1,000 nodes and 72,475.8 ms at 5,000. Each augmentation is a Dijkstra search plus a potential update.
 
 ## Applications
 
@@ -42,11 +42,11 @@ All numbers are the mean and standard deviation over seeds 5300 to 5304 from `re
 
 ![Peak memory by size](../results/memory_vs_size.png)
 
-On sparse graphs, at 1,000 nodes Edmonds-Karp took 78.2 (7.3) ms, push-relabel 20.7 (6.0) ms, and min cost flow 402.7 (59.2) ms. At 5,000 nodes they took 1,748.2 (269.3), 127.7 (19.6), and 8,470.5 (1,079.6) ms. At 25,000 nodes Edmonds-Karp took 34,469.9 (3,064.4) ms against 1,120.7 (86.6) ms for push-relabel. At 50,000 nodes Edmonds-Karp timed out on every seed while push-relabel took 3,673.0 (577.0) ms.
+On sparse graphs, at 1,000 nodes Edmonds-Karp took 68.5 (7.5) ms, push-relabel 18.5 (3.2) ms, and min cost flow 373.1 (28.2) ms. At 5,000 nodes they took 1,723.7 (207.8), 133.6 (23.2), and 12,338.5 (2,019.1) ms. At 25,000 nodes Edmonds-Karp took 81,912.9 (4,725.0) ms against 1,429.7 (147.7) ms for push-relabel. At 50,000 nodes Edmonds-Karp timed out on every seed while push-relabel took 3,993.6 (610.6) ms.
 
-On dense graphs, at 1,000 nodes the three took 477.9 (18.0), 9.8 (5.6), and 2,459.8 (226.0) ms, and at 5,000 nodes 11,096.6 (910.5), 51.0 (40.3), and 50,061.7 (3,324.1) ms. At 10,000 nodes Edmonds-Karp took 38,363.6 (3,072.6) ms against 256.7 (259.6) ms for push-relabel. Edmonds-Karp timed out at 25,000 and 50,000 dense nodes, and push-relabel finished those in 604.4 (828.3) and 3,215.7 (3,676.2) ms.
+On dense graphs, at 1,000 nodes the three took 455.7 (25.6), 10.6 (6.4), and 2,362.1 (240.2) ms, and at 5,000 nodes 18,199.5 (2,015.7), 75.7 (69.3), and 72,475.8 (5,743.2) ms. At 10,000 nodes Edmonds-Karp took 66,482.5 (1,761.8) ms against 240.6 (335.1) ms for push-relabel. Edmonds-Karp timed out at 25,000 and 50,000 dense nodes, and push-relabel finished those in 634.5 (903.8) and 3,060.6 (3,487.2) ms.
 
-Three things stood out. First, push-relabel wins at every size on both families and the gap widens with size. Second, memory grows with size for push-relabel: 4.3 MB at 1,000 sparse nodes, 14.0 MB at 10,000, 31.2 MB at 25,000, and 61.6 MB at 50,000. The dense family is heavier because it has more edges, going from 2.1 MB at 1,000 nodes to 140.6 MB at 50,000.
+Three things stood out. First, push-relabel wins at every size on both families and the gap widens with size. Second, memory grows with size for push-relabel: 4.2 MB at 1,000 sparse nodes, 15.3 MB at 10,000, 33.4 MB at 25,000, and 61.8 MB at 50,000. The dense family is heavier because it has more edges, going from 5.6 MB at 1,000 nodes to 144.6 MB at 50,000.
 
 ![Augmentations by size](../results/augmentations_vs_size.png)
 
@@ -60,4 +60,4 @@ The convergence profile is the result I did not expect. In `results/convergence_
 
 The engineering lessons are mostly about the boring parts. My first push-relabel returned a preflow, and I only noticed because the cut capacity did not match the flow value, so I added a final pass that returns excess to the source plus a validator against the cut. The min cost flow code looked fine for a while but was quietly returning a cost slightly above the true optimum, which I caught by comparing against a linear program on small graphs. Seeded generators and a fresh process per measurement made the benchmark trustworthy.
 
-The scalability lesson is that the asymptotic difference is real. Edmonds-Karp is fine at 1,000 nodes and useless at 50,000, while push-relabel went from 20.7 to 3,673.0 ms over the same range. If I were shipping this, I would use Edmonds-Karp where the code is easy to audit and push-relabel for anything large. Min cost flow I would keep for small weighted problems.
+The scalability lesson is that the asymptotic difference is real. Edmonds-Karp is fine at 1,000 nodes and useless at 50,000, while push-relabel went from 18.5 to 3,993.6 ms over the same range. If I were shipping this, I would use Edmonds-Karp where the code is easy to audit and push-relabel for anything large. Min cost flow I would keep for small weighted problems.
