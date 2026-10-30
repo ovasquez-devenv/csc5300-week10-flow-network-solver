@@ -68,6 +68,46 @@ RESULTS = os.path.join(ROOT, "results")
 DPI = 150
 
 
+def _peak_rss_kb() -> float:
+    """Peak resident memory of this process in kilobytes, on any OS.
+
+    Linux and macOS use the resource module. Windows has no resource module,
+    so it asks the operating system for the peak working set instead.
+    """
+    if sys.platform == "win32":
+        import ctypes
+        from ctypes import wintypes
+
+        class _Counters(ctypes.Structure):
+            _fields_ = [
+                ("cb", wintypes.DWORD),
+                ("PageFaultCount", wintypes.DWORD),
+                ("PeakWorkingSetSize", ctypes.c_size_t),
+                ("WorkingSetSize", ctypes.c_size_t),
+                ("QuotaPeakPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+                ("PagefileUsage", ctypes.c_size_t),
+                ("PeakPagefileUsage", ctypes.c_size_t),
+            ]
+
+        counters = _Counters()
+        counters.cb = ctypes.sizeof(_Counters)
+        kernel32 = ctypes.WinDLL("kernel32")
+        psapi = ctypes.WinDLL("psapi")
+        kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+        psapi.GetProcessMemoryInfo.argtypes = [wintypes.HANDLE, ctypes.POINTER(_Counters), wintypes.DWORD]
+        psapi.GetProcessMemoryInfo(kernel32.GetCurrentProcess(), ctypes.byref(counters), counters.cb)
+        return counters.PeakWorkingSetSize / 1024.0
+    import resource
+
+    value = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if sys.platform == "darwin":
+        return value / 1024.0
+    return float(value)
+
+
 def peak_memory_mb() -> float:
     """Peak resident memory of THIS process, in megabytes.
 
@@ -82,13 +122,7 @@ def peak_memory_mb() -> float:
     measurement.
     """
     try:
-        import resource
-
-        value = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-        # Linux and Windows report kilobytes, macOS reports bytes.
-        if sys.platform == "darwin":
-            return value / (1024.0 * 1024.0)
-        return value / 1024.0
+        return _peak_rss_kb() / 1024.0
     except Exception:
         try:
             with open("/proc/self/status", "r", encoding="utf-8") as handle:
@@ -131,13 +165,11 @@ def _worker(payload: dict) -> dict:
 
     maker = random_sparse if family == "sparse" else random_dense
 
-    import resource
-
     # Measure before the graph exists so the reported number covers the graph
     # plus the solver, which is the memory a caller actually needs. The
     # interpreter and the imported libraries are already resident by then and
     # are excluded.
-    before_kb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    before_kb = _peak_rss_kb()
     net = maker(nodes, seed)
     start = time.perf_counter()
     try:
@@ -168,11 +200,8 @@ def _worker(payload: dict) -> dict:
         }
 
     elapsed = time.perf_counter() - start
-    after_kb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    if sys.platform == "darwin":
-        delta_mb = max(0.0, (after_kb - before_kb) / (1024.0 * 1024.0))
-    else:
-        delta_mb = max(0.0, (after_kb - before_kb) / 1024.0)
+    after_kb = _peak_rss_kb()
+    delta_mb = max(0.0, (after_kb - before_kb) / 1024.0)
 
     claimed_cost = result.stats.get("cost") if name == "min_cost_flow" else None
     report = validate_flow(net, result.flow, net.source, net.sink, result.value,
@@ -431,7 +460,7 @@ def main(argv=None) -> int:
 
     parser = argparse.ArgumentParser(description="Benchmark the flow solvers")
     parser.add_argument("--quick", action="store_true", help="small sizes only, for a fast check")
-    parser.add_argument("--budget", type=float, default=90.0,
+    parser.add_argument("--budget", type=float, default=120.0,
                         help="seconds allowed per solver run (min cost flow gets 1.5 times this)")
     parser.add_argument("--seeds", type=int, default=5, help="how many of the five seeds to use")
     args = parser.parse_args(argv)
